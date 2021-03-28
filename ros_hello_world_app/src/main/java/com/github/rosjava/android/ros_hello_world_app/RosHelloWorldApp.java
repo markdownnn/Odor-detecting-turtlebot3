@@ -16,6 +16,7 @@ public class RosHelloWorldApp extends RosActivity
 
     private Joystick JoystickNode;
     private Camera<sensor_msgs.CompressedImage> CameraNode;
+    private Monitor MonitorNode;
 
     protected RosHelloWorldApp(String notificationTicker, String notificationTitle) {
         super(notificationTicker, notificationTitle);
@@ -29,6 +30,7 @@ public class RosHelloWorldApp extends RosActivity
         setContentView(R.layout.main);
         JoystickNode = (Joystick) findViewById(R.id.joystick);
         CameraNode = (Camera<sensor_msgs.CompressedImage>) findViewById(R.id.camera);
+        MonitorNode = (Monitor) findViewById(R.id.monitor);
     }
 
     public void moveForward(View v)
@@ -51,5 +53,8 @@ public class RosHelloWorldApp extends RosActivity
         nodeConfiguration.setNodeName("camera");
         CameraNode.setMessageToBitmapCallable(new BitmapFromCompressedImage());
         nodeMainExecutor.execute(CameraNode, nodeConfiguration);
+
+        nodeConfiguration.setNodeName("monitor");
+        nodeMainExecutor.execute(MonitorNode, nodeConfiguration);
     }
 }
